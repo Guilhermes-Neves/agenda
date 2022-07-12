@@ -1,14 +1,54 @@
 <%- include('includes/head'); %>
+  <%- include('includes/nav'); %>
 
-<section class="container">
-  <h1><%= csrfToken %></h1>
 
-  <form action="/" method="post">
-    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-    <label>Cliente</label>
-    <input type="text" name="cliente">
-    <button>Submit</button>
-  </form>
-</section>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-2"></div>
 
-<%- include('includes/footer'); %>
+        <div class="col-lg-8 my-3">
+          <h1 class="text-center">Agenda</h1>
+          
+          <%- include('includes/messages'); %>
+          <% if(contatos.length> 0) { %>
+            <p class="text-center lead">Seus contatos estão abaixo</p>
+              <div class="responsive-table">
+                <table class="table my-3">
+                  <thead>
+                    <th>Nome</th>
+                    <th>Sobrenome</th>
+                    <th>Email</th>
+                    <th>Telefone</th>
+                    <th colspan="2">Ações</th>
+                  </thead>
+                  <% contatos.forEach((contato)=> { %>
+                    <tr>
+                      <td>
+                        <%= contato.name %>
+                      </td>
+                      <td>
+                        <%= contato.lastName %>
+                      </td>
+                      <td>
+                        <%= contato.phone %>
+                      </td>
+                      <td>
+                        <%= contato.email %>
+                      </td>
+                      <td><a href="/contato/<%= contato._id %>">Editar</a></td>
+                      <td><a class="text-danger" href="/contato/delete/<%= contato._id %>">Excluir</a></td>
+                    </tr>
+                    <% }); %>
+                </table>
+              </div>
+              <% } else { %>
+                <p class="text-center lead">Não há contatos cadastrados.</p>
+              <% } %>
+        </div>
+
+        <div class="col-lg-2"></div>
+      </div>
+    </div>
+
+
+    <%- include('includes/footer'); %>
